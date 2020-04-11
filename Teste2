@@ -1,0 +1,311 @@
+Método e Atributos Estáticos
+
+public class Gato{
+
+  static int totalGatos = 0; 
+  # A variável precisa ter o modificador static
+  # O mesmo valor é compartilhado por qualquer instância
+  # Não precisa de uma instância para acessar um membro estático...
+  # Não use variáveis estáticas como variáveis globais!
+  # Métodos estáticos são similares a funções na programação estruturada
+  #
+  
+  Gato(){
+    totalGatos++;  
+  }
+
+}
+
+Comparando Tipos de Atributos - Estático X Instância
+
+Programa: EstaticaVsIntancia
+Classe: Somador
+
+public class Somador{
+  String nome;
+  int valorInstancia = 0;
+  static int valorEstatica = 0;
+  
+  void somar(){
+      valorInstancia++;
+      valorEstatica++;
+  
+  }
+  
+  void imprimir(){
+  System.out.println("O somador: " + nome + "instancia = "+valorInstancia + " e estatica = "+ valorEstatica"); 
+  
+  }
+
+}
+
+// Método main
+
+public class Principal{
+
+  public static void main(String[] args){
+  
+      Somador s1 = new Somador();
+      s1.nome = "Somador 1";
+      Somador s2 = new Somador();
+      s2.nome = "Somador 2";
+      Somador s3 = new Somador();
+      s3.nome = "Somador 3";
+      
+      
+      for(int i = 0; i < 3; i ++){
+	  s1.somar();
+	  s2.somar();
+	  s3.somar();
+      
+      
+      }
+      
+      s1.imprimir();
+      s2.imprimir();
+      s3.imprimir();
+      
+  
+  }
+
+}
+
+Pensando em Métodos Orientados a Objetos
+
+Programação estruturada -- Passar tudo por parâmetro
+Programação Orientada a Objetos -- invocar o método no Objetos
+
+Um objeto executa seus métodos com base nos parâmetros recebidos e
+em seus dados internos!
+
+
+Refatorando - de Funções para Métodos
+
+Classe: Aluno
+# Na função estruturada
+public class Aluno{
+
+  int bim1;
+  int bim2;
+  int bim3;
+  int bim4;
+
+}
+
+public class VerificadoraNotas{
+  public static int mediaAluno(Aluno a){
+      int total = 0;
+      total += a.bim1;
+      total += a.bim2;
+      total += a.bim3;
+      total += a.bim4;
+      
+      return total / 4;
+  
+  }
+
+  public static boolean passouDeAno(aluno a){
+      int media =  mediaAluno(a);
+      if(media >= 60)
+	return true;
+      return false;
+  }
+}
+
+# Na programação Orientada a objeto
+
+public class Principal{
+
+    public static void main(String[] args){
+	Aluno guerra = new Aluno();
+	guerra.bim1 = 70;
+	guerra.bim2 = 70;
+	guerra.bim3 = 70;
+	guerra.bim4 = 70;
+	
+	
+	System.out.println(VerificadoraNotas.mediaAluno(guerra));
+    
+    }
+}
+
+
+# Na POO os métodos estão dentro da classe aluno
+
+
+
+Modelagem CRC: Identificando Classes
+
+CRC Modeling - Uma abordagem informal para modelar uma aplicação 
+com classes e objetos
+
+Passo Zero: Especifica o Sistema
+Sistema de Automação da Biblioteca: A Biblioteca tem um nome, mantém
+um catálogo de livros, onde cada livro tem título, autor e número
+único de catálogo. Há Usuários da Biblioteca registrados, cada...
+
+Passo 1: Identificar Objetos e Classes
+- Procurar por substantivos/nomes na especifição de requisitos do
+sistema
+
+- Potenciais objetos e classes
+
+substantivos: 
+- Biblioteca
+- nome
+- catálogo de livros
+- número único de catálogo
+- Usuários da Biblioteca
+
+Passo 2: Refina a lista de classes
+- Identificar nomes diferentes que representem a mesma classe
+- Retirar nomes que representam atributos
+- Identificar classes e subclasses
+- Descrever o que cada classe faz
+
+Lista de Substantivos
+
+- Biblioteca = Sistema = SAB
+    nome(da Biblioteca)
+    catálogo de livros(da Biblioteca)
+
+- número único de catálogo
+- nome
+- Usuário da Biblioteca
+    nome único de usuário (Usuário da Biblioteca)
+
+- catálogo de livros
+- nome único de usuáio
+
+- livro
+    título(do livro)
+    autor(do livro)
+    número único de catálogo(do livro)
+- Bibliotecária
+
+Após eliminar os atributos e sinonimos sobrou
+
+Biblioteca
+livro
+Usuário da Biblioteca
+Bibliotecaria -- Ator que interage com o SAB
+
+Classes do Sistema
+    Biblioteca 
+    Livro 
+    Usuário
+
+    
+Descrição
+  Biblioteca: Representa o Sistema de Automação da Biblioteca
+  Livro: Representa usuários que emprestam livros da Biblioteca
+  
++-----------------------------------------------+
+|Classe: Biblioteca				|
++-----------------------+-----------------------+
+|Descrição: Representa o Sistema de Automação 	|
+|da Biblioteca					|
++-----------------------+-----------------------+
+|    Responsabilidade   |	Colaboração	|
++-----------------------+-----------------------+
+|			|			|
+|-----------------------+-----------------------|
+|			|			|
+|-----------------------+-----------------------|
+|			|			|
++-----------------------+-----------------------+
+
+
+
++-----------------------+-----------------------+
+|Classe: Livro		|			|
++----------------------+------------------------+
+|Descrição: Representa usuários que emprestam 	|
+|livros da Biblioteca				|
+|-----------------------+-----------------------|
+|    Responsabilidade   |    Colaboração	|
+|-----------------------+-----------------------|
+|			|			|
+|-----------------------+-----------------------|
+|			|			|
+|-----------------------+-----------------------|
+|			|			|
++-----------------------+-----------------------+
+
++-----------------------------------------------+
+|Classe: Usuário				|
+|-----------------------+-----------------------|
+|Descrição: Representa os Usuários		|
+|-----------------------+-----------------------|
+|    Responsabilidade   |    Colaboração	|
+|-----------------------+-----------------------|
+|			|			|
+|-----------------------+-----------------------|
+|			|			|
+|-----------------------+-----------------------|
+|			|			|
++-----------------------+-----------------------+
+
+Agora queremos identificar as responsabilidades e colaborações das
+classes de uma aplicação no contexto da Modelagem CRC!
+
+Passo 3: Responsabilidades óbvias
+- Identificar responsabilidades óbvias para cada classe!
+Classe: Biblioteca 
+sabe nome
+sabe catálogo de livros
+faz registra novos alunos
+
+Passo 4: Verbos como responsabilidades
+
+Sistema de Automação da Biblioteca: 
+- tem nome
+- pode emprestar um livro
+- devolver o livro
+- registrar um novo usuário da biblioteca
+
+Passo 5: Atribuição das responsabilidades
+
+- sabe nome
+- sabe catálogo de livros
+- sabe lista de usuários
+- Registra novo usuário
+- Adicionada novo livro ao catálogo
+- Emprestar livro
+- Devolver livro
+- Restrar novo usuário
+- Exibir livros dispóniveis empréstimo
+- Exibir livros indisponíveis empréstimo
+
+Passo 6: Identificar colaborações
+Lógica "Emprestar livro" de Biblioteca
+
+- Tem um livro para empréstimo parra dado usuário
+- Marca livro como emprestado			}
+- Anaxa usuário como "emprestador" do livro	} Responsabilidades
+- Anexa livro à listta de livros do usuário	} Novas
+
+
+- Marca livro como emprestado			} Responsabilidades
+- Anaxa usuário como "emprestador" do livro	} da classe Livro
+
+- Anexa livro à listta de livros do usuário	} classe Usuário
+
+Diagrama de Colaboração
++-------------+               +-------------+                                                
+|             |               |             |                                        
+|Classe       |---------------|Classe       |                            
+|Biblioteca   |     Depende   |Livro        |                              
+|             |               |             |                            
++-------------+               +-------------+                                            
+      |
+      |
+      |Depende
+      |
+      |
++-------------+
+|             |
+|Classe       |
+|Usuario      |
+|             |
++-------------+
