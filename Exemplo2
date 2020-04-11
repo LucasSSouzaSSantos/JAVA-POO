@@ -1,0 +1,284 @@
+Exemplo SAB: 
+A biblioteca tem nome, mantém catálogo de livros onde cada livro 
+tem título, autor e número único de catálogo.Há usuários da 
+biblioteca registrados, cada com nome único de usuário.
+
+Usuário da biblioteca pode emprestar livro e devolver o livro emprestado para o
+sistema.
+
+No entanto, cada transação, cada realização de empréstimo ou
+devolução de livro deve ser registrada por uma bibliotecária.
+A bibliotecária tem que registrar novo usuário da biblioteca no SAB.
+Quando solicitada, ela pode exibir, ordem crescente do número único de catálogo,
+os livros disponíveis para empréstimo, bem como exibir os livros já emprestados e,
+portanto, indisponíveis para empréstimo. 
+
+Modelagem CRC
+
+Passo 1: Identifica Objetos e Classes
+    Substantivos ou expressões substantivas:
+	- Biblioteca
+	- nome
+	- catálogo de livros
+	- livro
+	- título
+	- autor
+	- número de catálogo
+	- usuários da biblioteca
+	- nome único de usuário
+	- sistema
+	- transação
+	- emprestimo
+	- devolução
+	- bibliotecária
+	- SAB
+	- ordem
+Essa lista tem o potêncial de ser uma classe
+
+
+Passo 2: Refina a lista de classes
+    Nem todos os substantivos ou expressões substantivas serão classes
+    para isso é necessário refinar essa lista
+    - Nomes fora do escopo do sistema e/ou são verbos "enrustidos"
+    - Retirar nomes que representam atributos
+    - Identificar nomes diferentes que representam a mesma classe
+    - Identificar relacionamentos entre os nomes
+    - Descrever o que cada classe faz
+
+- Biblioteca			---- CLASSE
+- nome				---- atributo(biblioteca)
+- catálogo de livros		---- atributo(biblioteca)
+- livro				---- Classe
+- título			---- atributo(Livro)
+- autor				---- atributo(Livro)
+- número de catálogo		---- atributo(Livro)
+- Usuário da biblioteca 	---- CLASSE
+- nome único de usuário		---- atributo(Usuario da Biblioteca)
+- sistema			---- sinonimo(biblioteca)
+- transação			---- verbo
+- emprestimo 			---- verbo
+- devolução  			---- verbo
+- bibliotecária 		---- fora do escopo
+- SAB    			---- sinonimo(biblioteca)
+- ordem				---- fora do escopo
+
+
+Passo 3: Identifica responsabilidades óbvias
+    Identificar responsabilidades óbvias para cada classe
+      Classe Biblioteca:
+	  Sabe nome
+	  Sabe catálogo de livros
+	  Sabe lista de usuários
+	  Regista usuário
+	  Adiciona livro ao catálogo
+	  
+      Classe Livro:
+	  Sabe título 
+	  Sabe autor
+	  Sabe nr. único de livro
+	  Sabe disponibilidade emprestimo
+	  Sabe usuario, se emprestado
+	  
+      Classe Usuario:
+	  Sabe nome
+	  Sabe lista de livros emprestados(inicialmente vazia)
+
+Passo 4: Identifica verbos como responsabilidades
+    Verbos e predicados do tipo SABE:
+      - tem nome
+      - mantém um catálogo de livros
+      - tem título
+      - tem autor
+      - número unico de catálogo
+      - cada um com um nome único de usuario
+
+   Verbos e predicados do tipo FAZ:
+     +---------------------------------------------------+ 
+     |							 |
+     | - emprestar um livro				 |
+     | - devolver o livro				 |
+     | - registrar usuário				 |
+     | - exibir livros diposníveis para empréstimo       |
+     | - exibir os livros indisponíveis para emprestimo  |
+     |---------------------------------------------------|
+     | Classe Biblioteca				 |	
+     +---------------------------------------------------+
+
+Passo 5: Atribuição das novas responsabilidades
+
+   Para cada potencial responsabilidade, verifique a classe a ser
+   atribuída
+      - se corresponder a responsabilidade óbvia, buscar outra classe
+      - se não, atribuir a essa classe
+
+
+
+Passo 6: Apresentar lógica para cada responsabilidade
+      Lógica "Empresta livro" de Biblioteca
+	  - Tem um livro para empréstimo para dado usuário
+	  - Marca livro como emprestado
+	  - Anexa usuário como alvo do emprestimo do livro
+          - Anexa livro à lista de livros emprestados pelo usuário
+	 
+	 Responsabilidades novas:
+	 +------------------------------------------------------+ 
+	 |                                                      |
+	 | - Marca livro como emprestado                        |
+	 | - Anexa usuário como alvo do emprestimo do livro     |
+	 |------------------------------------------------------|
+	 |Classe: Livro						|
+	 +------------------------------------------------------+
+	 
+	 +---------------------------------------------------------+
+	 | - Anexa livro à lista de livros emprestados pelo usuário|
+	 |---------------------------------------------------------| 
+	 |Classe: Usuario					   |
+	 +---------------------------------------------------------+
+      Lógica "Devolve Livro" de Biblioteca
+	  - Desanexa livro da lista de livros emprestados pelo usuário
+	  - Desanexa usuário como alvo do empréstimo do livro
+	  - Marca livro como disponível
+	  
+	  Responsabilidades Novas
+	 +---------------------------------------------------------+
+	 | - Desanexa livro da lista de livros emprastado pelo     |
+	 |   usuário						   | 
+	 |---------------------------------------------------------| 
+	 |Classe: Usuario					   |
+	 +---------------------------------------------------------+
+
+	 +---------------------------------------------------------+
+	 | - Marca livro como lido				   |
+	 | - Desanexa usuário como alvo do empréstimo do livro     |
+	 |---------------------------------------------------------| 
+	 |Classe: Livro 					   |
+	 +---------------------------------------------------------+
+	 
+      Lógica "Exibe livros disponíveis" de Biblioteca
+	  - Para cada livro do catálogo de livros
+	  - Se livro está disponível?
+	  - Então coloca na lista para exibir
+	  
+	  Responsabilidade Nova  
+	 +---------------------------------------------------------+
+	 | - Livro está disponível 				   |      |
+	 |---------------------------------------------------------| 
+	 |Classe: Livro 					   |
+	 +---------------------------------------------------------+
+	 
+      Lógica "Exibe livros não disponíveis" de Biblioteca
+	  - Para livro do catálogo de livros
+	  - Se livro não está disponível ?
+	  - Então coloca na lista para exibir
+	  
+      Lógica "Registra usuário" de Biblioteca
+	  - Se usuário não está na lista de usuários da Biblioteca
+	  - Então criar/instancia um novo objeto Usuario
+	  - Adiciona esse objeto à lista de usuários da biblioteca
+	  e avisa "Novo usuário"
+	  - Caso contrário, avisa "Usuário já existe!"
+	  
+	 +---------------------------------------------------------+
+	 | - Adiciona esse objeto à lista de usuários da biblioteca| 
+	 |   e avisa "Novo usuário" 				   |
+	 |---------------------------------------------------------| 
+	 |Classe: Biblioteca 					   |
+	 +---------------------------------------------------------+
+	  
+     Lógica "Adiciona livro" de Biblioteca
+	  - Cria novo número único de catálogo
+	  - Cria/instancia um objeto Livro sob o numero único de 
+	  catálogo
+	  - Adiciona objeto ao catálogo de livros da biblioteca
+	  
+Classe: Biblioteca
+    Responsabilidade			Colaboração
+      Registra usuario			Colaboradora: Usuario Colaborador: Construtor
+      Adiciona livro ao catálogo	Colaboradora: Livro
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
