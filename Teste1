@@ -1,0 +1,15 @@
+É um método especial de uma classe Java que tem o mesmo nome da classe, cuja execução se dá imediatamente após a instanciação de um objeto da classe, com o objetivo de alocar memória e iniciar as suas variáveis de instância. Como é chamado esse método especial? [Na sua resposta, por limitação do presente ambiente de correção automática, coloque obrigatoriamente apenas a primeira letra em maiúscula; o restante deverá estar em minúscula!]
+1. Construtor
+
+Uma classe que tem um método abstrato não precisa ser declarada como abstrata. Verdadeiro/V ou Falso/F?
+2. Falso
+
+Uma classe abstrata pode não ter nenhum método abstrato.
+
+Verdadeiro
+
+Falso
+Incorrect
+
+Basta que a classe seja declarada como abstrata; nesse caso, o desenvolvedor usualmente deseja transmitir para as subclasses uma interface comum mínima.
+
