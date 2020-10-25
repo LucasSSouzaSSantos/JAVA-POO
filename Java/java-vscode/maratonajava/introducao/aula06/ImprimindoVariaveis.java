@@ -12,7 +12,7 @@ public class ImprimindoVariaveis {
         long numeroGrande = 1000L;
         char caractere = 'A';
         String nome = "Lucas de Souza Santos";
-        System.out.println("clear");
+        
         System.out.println("Variável do tipo int: " + idade);
         System.out.println("Variável do tipo double: " + salarioDouble);
         System.out.println("Variável do tipo float: " + salarioFloat);
