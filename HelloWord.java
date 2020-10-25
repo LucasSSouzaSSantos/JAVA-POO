@@ -1,8 +1,6 @@
-package classePrincipal;
+public class HelloWord{
 
-plubic class Principal{
-
-public static void main(String[] arg){
+public static void main(String args[]){
 
     System.out.println("Hello, world!");
 }
