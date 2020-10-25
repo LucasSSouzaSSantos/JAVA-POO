@@ -1,4 +1,4 @@
-package maratonajava.introducao.aula06;
+package maratonajava.introducao.aula006;
 
 public class ImprimindoVariaveis {
     
